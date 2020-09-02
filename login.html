@@ -8,9 +8,13 @@
         <link href='https://fonts.googleapis.com/css?family=Oswald:400' rel='stylesheet' type='text/css'>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <meta name="google-signin-client_id" content="187662806857-v147a1jkdef0otqmmlnrnagc5r3b8ci1.apps.googleusercontent.com">
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src=google_script.js></script>
         <style>
             body {
-                background-color: whitesmoke;
+                background-color: lightskyblue;
             }
         </style>
     </head>
@@ -38,33 +42,119 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
           </script>
+
           <div id="fb-root"></div>
           <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v8.0&appId=665938447354028&autoLogAppEvents=1" nonce="ZkCW1Wmw"></script>
+
         <h1 style="text-align: center; position: relative; top: 20px;">Sign in or Register using social media</h1>
-        <div class="pages">
-            <script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
-        <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in" style="height: 50px; width: 100%; position: absolute; top: 40%; left: 250px;"></div>
-        <script type="text/javascript">
-            AppleID.auth.init({
-                clientId : '[CLIENT_ID]',
-                scope : '[SCOPES]',
-                redirectURI: '[REDIRECT_URI]',
-                state : '[STATE]'
-            });
-        </script>
-        </div>
 
         <div class="pages">
-            <div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="false" data-width="" style="position: absolute; top: 30%; left: 250px;"></div>
+            <div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="false" data-width="" style="position: absolute; top: 35%; left: 250px;"></div>
             <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
             <script>
+                function statusChangeCallback(response) {
+                    if (response.status == 'connected') {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+
+                function insertValues(username, email) {
+                    var express = require('express');
+                    var mysql = require('mysql');
+                    var app = express();
+
+                    var con = mysql.createConnection({
+                        host : 'localhost',
+                        user : 'root',
+                        password : null,
+                        database : 'google_accounts'
+                    });
+
+                    con.connect(function(error) {
+                        if (!!error) {console.log("Error!"); }
+                    });
+
+                    app.post('/submit', function(req, res) {
+                        var sql = "INSERT INTO google_accounts (Name, Email) VALUES (username, email)";
+
+                        con.query(sql, function (err) {
+                            if (err) {throw err; }
+                        })
+
+                        con.end();
+                    });
+
+                    app.listen(5500);    
+                }
+
                 function checkLoginState() {
                     FB.getLoginStatus(function(response) {
-                        statusChangeCallback(response);
+                        var status = statusChangeCallback(response);
+                        if (status) {
+                            var user_name = response.name;
+                            var user_email = response.email;
+                            insertValues(user_name, user_email);
+                            top.location.href = "account_page.html";
+                        }
+                        else {
+                            top.location.href = "Home_Page.html";
+                        }
                     });
                 }
             </script>
         </div>
+
+        <div class="back">
+            <button type="button" class="btn btn-light" style="position: absolute; top: 0%; left: 0px;">
+                <a href="Home_Page.html">Back</a>
+            </button> 
+        </div>
+
+        <h4 style="position: absolute; top: 28%; left: 850px;">Don't have an account?</h4>
+        <div class="pages">
+            <div class="g-signin2" data-onsuccess="onSignIn" style="position: absolute; top: 45%; left: 250px;"></div>
+
+            <script>
+                function onSignIn(googleUser) {
+
+                }
+
+            </script>
+        </div>
+
+        <div class="sign-up">
+            <button type="button" class="btn btn-primary" onclick="window.location='https://www.facebook.com/r.php' " style="position: absolute; top: 35%; left: 900px;">Sign up for Facebook
+            </button> 
+        </div>
+
+        <div class="sign-up">
+            <button type="button" class="btn btn-light" onclick="window.location='https://accounts.google.com/signup/v2/webcreateaccount?hl=en&flowName=GlifWebSignIn&flowEntry=SignUp' " style="position: absolute; top: 45%; left: 900px;">Sign up for Google
+            </button> 
+        </div>
+
+        <div class="google-logout">
+            <button type="submit" class="btn btn-primary" onclick="signOut();" style="position: fixed; bottom: 0; right: 0;">Sign Out</button>
+            <style>
+                #google-logout {
+                    position: fixed;
+                    bottom: 0;
+                    right: 0;
+                }
+            </style>
+                <script>
+                    function signOut() {
+                        var auth2 = gapi.auth2.getAuthInstance();
+                        auth2.signOut().then(function () {
+                        console.log('User signed out.');
+                        window.location = 'Home_Page.html';
+                        });
+                    }
+                </script>
+        </div>
+
     </body>
 </html>
 
