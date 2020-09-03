@@ -1,11 +1,11 @@
 <?php 
 
-$input = $_GET["name"];
+$input = $_GET["email"];
 
-function searchName($name) {
+function searchName($email) {
     $connection = mysqli_connect("localhost", "root", "", "google_accounts");
 
-    $search = mysqli_query($connection, "SELECT Email FROM google_login WHERE Name = 'name'");
+    $search = mysqli_query($connection, "SELECT Name FROM google_login WHERE Email = 'email'");
 
     $data = array();
 

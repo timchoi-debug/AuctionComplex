@@ -51,7 +51,7 @@
         <div class="pages">
             <div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="false" data-width="" style="position: absolute; top: 35%; left: 250px;"></div>
             <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
-            <script>
+            <script src="member.js">
                 function statusChangeCallback(response) {
                     if (response.status == 'connected') {
                         return true;
@@ -96,6 +96,7 @@
                         if (status) {
                             var user_name = response.name;
                             var user_email = response.email;
+                            var new_member = new Member(user_name, user_email);
                             insertValues(user_name, user_email);
                             top.location.href = "account_page.html";
                         }

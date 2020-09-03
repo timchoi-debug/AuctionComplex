@@ -1,6 +1,96 @@
 <!DOCTYPE html>
 <html ng-app="AuctionComplex"> 
     <head>
-        
+        <meta charset="UTF-8">
+        <title>Your Account Page</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Oswald:400' rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <style>
+            body {
+                background-color: lightgray;
+            }
+        </style>
+
     </head>
+
+    <body>
+        <h1 style="position: absolute; left: 35%;">Welcome to your dashboard!</h1>
+        <div class="form-group col-12" style="position: absolute; top: 10%;">
+            <hr>
+        </div>
+
+        <div class="btn" style="position: absolute; top: 200px; left: 30px;">
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#groupModal">Create New Auction</button>
+        </div>
+
+        <div class="modal fade" role="dialog" id="groupModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Create New Auction</h3>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Name Your Auction</p>
+                        <div class="form-group">
+                            <input type="text" name="title" class="form-control" placeholder="title of auction">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" onclick="createAuction()">Save</button>
+                        <script src="group.js">
+                            var global_auctions = [];
+                            function createAuction() {
+                                var new_auction = new Auction(document.getElementsByName('title').innerHTML, this);
+                                global_auctions.push(new_auction);
+                            }
+                        </script>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="form-search">
+                            <p>Search For Members</p>
+                            <input type="text" name="title" class="form-control" placeholder="Member Search">
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success" onclick="createAuction()">Search</button>
+                                <button type="submit" class="btn btn-success" onclick="window.location='auction_panel.html'">Create</button>
+                                <div class="box"></div>
+                                <script src="group.js">
+                                    function findMembers() {
+                                        searchForEmails();
+                                    }
+                                    function addUser(name) {
+                                        var new_person = new Member(name);
+                                        this.add_to_group(new_person);
+                                    }
+                                    function displayResults() {
+                                        for (var i = 0; i < data.length; i++) {
+                                            document.getElementsByClassName('box').innerHTML += "<h1>" + data[i] + "</h1>";
+                                            document.getElementsByClassName('box'),innterHTML += "<div class='addUser'>" + "<button type='submit' class='btn btn-primary btn-small' onclick='addUser(data[i])'>" + "Add User" + "</button>" + "</div>" + "<br>";
+                                        }
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            for (var x = 0; x < global_auctions.length; x++) {
+                var ind_div = document.createElement('div');
+            }
+
+
+        </script>
+        
+    </body>
 </html>
