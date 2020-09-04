@@ -87,9 +87,15 @@
         <script>
             for (var x = 0; x < global_auctions.length; x++) {
                 var ind_div = document.createElement('div');
+                ind_div.className = 'box';
+                ind_div.innerHTML = "<h1>" + global_auctions[x].getTitle() + "</h1>";
+                var button = document.createElement('button');
+                button.className = 'btnlink';
+                button.onclick = function () {
+                    var current_auction = x;
+                    window.location = "auction_panel.html?current_auction=" + x;
+                }
             }
-
-
         </script>
         
     </body>

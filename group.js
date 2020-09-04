@@ -31,6 +31,8 @@ class AuctionGroup {
     #blockedUsers;
     #currentItem;
     #bid_list;
+    #auctioneer;
+    #timeAllowed;
 
 
     constructor(name, account) {
@@ -41,7 +43,25 @@ class AuctionGroup {
         owner = account;
         this.#blockedUsers = [];
         currentItem = "";
-        bid_list = []
+        bid_list = [];
+        this.#auctioneer;
+        this.#timeAllowed = 10;
+    }
+
+    getTitle() {
+        return title;
+    }
+
+    getMembers() {
+        return members;
+    }
+
+    setAuctioneer(name) {
+        this.#auctioneer = name;
+    }
+
+    getItem(curr_item) {
+        currentItem = curr_item;
     }
 
     search_for_users() {
@@ -50,6 +70,10 @@ class AuctionGroup {
 
     add_to_group(acct) {
         members.push(acct);
+    }
+
+    increaseTimeAllowed(factor) {
+        this.#timeAllowed *= factor;
     }
 
     getOwner() {
@@ -71,7 +95,8 @@ class AuctionGroup {
     }
 
     reinstate(name) {
-        
+        this.#blockedUsers.splice(this.#blockedUsers.indexOf(name),1);
+        members.splice(name);
     }
 };
 

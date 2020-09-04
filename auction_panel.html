@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Oswald:400' rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <div class="btn" style="position: absolute; top: 30px; right: 5%;">
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#groupModal">View Members</button>
+        </div>
+
+        <div class="modal fade" role="dialog" id="groupModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Members in this group</h3>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                    </div>
+
+                    <div class="modal-body">
+                        <script src="account_page.html">
+                            for (var a = 0; a < global_auctions.length; a++) {
+                                document.getElementsByClassName('modal-body').innerHTML = "<h1>" + global_auctions[curr_auction].getMembers()[i].getName() + "</div>";
+                                document.createElement('box-remove');
+                                var remove = document.getElementsByClassName('box-remove');
+                                remove.innerHTML = "<button type='button' class='btn btn-secondary btn-small' onclick='remove_from_group()'>" + "Remove User" + "</button>";
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </body>
+</html>
