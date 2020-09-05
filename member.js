@@ -1,21 +1,44 @@
 $('head')
+var mysql = require('mysql');
+var express = require('express');
 
+const app = express();
+
+const database = mysql.createConnection({
+    host:    'localhost',
+    user:    'root',
+    password:   null,
+    database:  'google_accounts'
+});
+
+database.connect((err) => {
+    if (err) throw err;
+});
 
 class Member {
     #name;
     #email;
-    #groups;
 
     constructor(name, email) {
         this.name = name;
         this.email = email;
-        groups = [];
+    }
+
+    getName() {
+        return name;
     }
 
     constructor(name) {
         this.name = name;
         this.email = getEmail(name);
-        groups = [];
+    }
+
+    getEmail(name) {
+        let sql = 'SELECT Email FROM google_accounts WHERE Name = ' + name;
+        database.query(sql, function(err, res) {
+            if (err) throw err;
+            return res;
+        });
     }
 
     joinGroup(group) {

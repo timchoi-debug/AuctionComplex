@@ -2,6 +2,8 @@ var mysql = require('mysql');
 var express = require('express');
 var app = express();
 
+include('search_users.js');
+
 
 //searches for an email based on name in google_accounts
 function searchForEmails() {
@@ -53,6 +55,7 @@ class AuctionGroup {
     }
 
     getMembers() {
+        members = getNames(title);
         return members;
     }
 
@@ -70,6 +73,7 @@ class AuctionGroup {
 
     add_to_group(acct) {
         members.push(acct);
+        insert(title, acct.getName());
     }
 
     increaseTimeAllowed(factor) {
@@ -92,6 +96,7 @@ class AuctionGroup {
 
     removeUser(name) {
         members.splice(members.indexOf(name), 1);
+        remove(title, name);
     }
 
     reinstate(name) {

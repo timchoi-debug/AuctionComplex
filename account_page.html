@@ -62,13 +62,30 @@
                                 <button type="submit" class="btn btn-success" onclick="createAuction()">Search</button>
                                 <button type="submit" class="btn btn-success" onclick="window.location='auction_panel.html'">Create</button>
                                 <div class="box"></div>
+                                <script src="https://smtpjs.com/v3/smtp.js"></script>
                                 <script src="group.js">
+                                    function sendEmail(person) {
+                                        var owner_email = this.getOwner().getEmail();
+                                        var msg = "Dear " + person.getName() + ",\n" + "You've been added to auction group: " + this.getTitle() + ".  You can now enter into that group." 
+                                        Email.send((
+                                            Host: "smtp.gmail.com",
+                                            Username: owner_email,
+                                            Password: "fefwefwefw",
+                                            To: person.getEmail(),
+                                            From: owner_email,
+                                            Subject: "You've been added!",
+                                            Body: msg
+                                        )).then( function () {
+                                            return true;
+                                        });
+                                    }
                                     function findMembers() {
                                         searchForEmails();
                                     }
                                     function addUser(name) {
                                         var new_person = new Member(name);
                                         this.add_to_group(new_person);
+                                        sendEmail(new_person);
                                     }
                                     function displayResults() {
                                         for (var i = 0; i < data.length; i++) {
@@ -84,7 +101,19 @@
             </div>
         </div>
 
-        <script>
+        <script src="search_users.js"> 
+            function verify(index) {
+                var name = document.getElementById('realName').innerHTML;
+                let found = findName(global_auctions[index].getTitle(), name);
+                if (found) {
+                    window.location = "auction_panel.html";
+                }
+                else {
+                    alert("Error! Unathorized Access!");
+                }
+            }
+
+
             for (var x = 0; x < global_auctions.length; x++) {
                 var ind_div = document.createElement('div');
                 ind_div.className = 'box';
@@ -93,7 +122,29 @@
                 button.className = 'btnlink';
                 button.onclick = function () {
                     var current_auction = x;
-                    window.location = "auction_panel.html?current_auction=" + x;
+                    var popup = document.createElement('div');
+                    popup.className = 'popup';
+                    var overlay = popup.createElement('div');
+                    overlay.className = 'overlay';
+                    var content = overlay.createElement('div');
+                    content.className = 'content';
+                    var close = content.createElement('div');
+                    close.className = 'close-btn';
+                    close.onclick = verifyUser(x);
+                    close.innerHTML += "&times";
+                    content.innerHTML += close.innerHTML + "<h1>" + "Please Enter Your full name" + "</h1>";
+                    var form = content.createElement('form');
+                    var new_label = form.createElement('label');
+                    new_label.getElementsByClassName('label').htmlFor = "name";
+                    new_label.innerHTML += "Enter Name" + "</br>"; 
+                    var input = form.createElement('input').type = "text";
+                    input.setAttribute("id", "realName");
+                    input.setAttribute("name", "name");
+                    var submit_input = form.createElement('input');
+                    submit_input.type="submit";
+                    submit_input.setAttribute("value", "Submit");
+                    submit_input.onclick = verify();
+                    form.innerHTML += new_label.innerHTML + input.innerHTML + submit_input.innerHTML;
                 }
             }
         </script>
