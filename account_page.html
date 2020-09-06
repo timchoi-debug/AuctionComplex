@@ -46,7 +46,6 @@
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success" onclick="createAuction()">Save</button>
                         <script src="group.js">
-                            var global_auctions = [];
                             function createAuction() {
                                 var new_auction = new Auction(document.getElementsByName('title').innerHTML, this);
                                 global_auctions.push(new_auction);

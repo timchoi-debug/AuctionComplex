@@ -24,6 +24,8 @@ function searchForEmails() {
     }
 }
 
+var global_auctions = [];
+
 class AuctionGroup {
     #title;
     #date_created;
