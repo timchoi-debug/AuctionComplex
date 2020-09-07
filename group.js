@@ -81,6 +81,10 @@ class AuctionGroup {
     increaseTimeAllowed(factor) {
         this.#timeAllowed *= factor;
     }
+    
+    getTime() {
+        return this.#timeAllowed;
+    }
 
     getOwner() {
         return owner;
