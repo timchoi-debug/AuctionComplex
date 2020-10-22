@@ -72,6 +72,11 @@
 
         <script>
             function sellItem() {
+                var new_bid = {
+                    class: 'Bid',
+                    name: document.getElementsByClassName("popup-content").elements[0],
+                    price: document.getElementsByClassName("popup-content").elements[1]
+                }
                 
             }
         </script>
@@ -115,5 +120,12 @@
                     }, 1000);
                 })
         </script>
+
+        <h2 style="position: relative; right: -30%; bottom: -100px;">Bids Placed</h2>
+        <script src="bid.js">
+        </script>
+        <h2 style="position: relative; right: -70%; bottom: -46px;">Chat</h2>
+
+        
     </body>
 </html>
